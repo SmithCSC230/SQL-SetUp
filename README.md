@@ -1,82 +1,74 @@
-# CSC230 MySQL Python Starter
+# CSC230 SQLite Activity
 
-This folder includes:
-- `environment.yml`: conda environment definition
-- `requirements.txt`: pip fallback dependencies
-- `mysql_test.py`: simple script to verify a MySQL connection
-- `mysql_test_notebook.ipynb`: JupyterHub fallback version
+## Folder layout
 
-## Conda path (recommended)
+- `jupyterhub/`: main in-class path
+- `local/`: optional local setup path
 
-### 1. Create environment
+## In-class default (recommended): JupyterHub
+
+Open:
+- `jupyterhub/sqlite_activity_notebook.ipynb`
+
+Flow:
+1. Open the notebook in campus [JupyterHub](https://jupyterhub.smith.edu).
+2. Run cells top-to-bottom.
+3. Complete the activity cells (sanity checks, reset, A -> D).
+
+This notebook uses Python's built-in `sqlite3`, so students do not need MySQL installed.
+
+## Optional local path
+
+### Option A: no conda, no installs
 
 ```bash
+cd local
+python sqlite_test.py
+```
+
+### Option B: conda (optional)
+
+```bash
+cd local
 conda env create -p ./.conda-env -f environment.yml
 ```
 
-### 2. Activate environment
+Activate environment:
 
+Mac/Linux:
 ```bash
-conda activate "$(pwd)/.conda-env"   # Mac/Linux
+conda activate "$(pwd)/.conda-env"
 ```
 
-If activation fails, run:
+Windows (VSCode terminal):
 
+PowerShell:
+```powershell
+conda activate "$pwd\.conda-env"
+```
+
+Command Prompt (`cmd`):
+```bat
+conda activate "%cd%\.conda-env"
+```
+
+Git Bash:
+```bash
+conda activate "$(pwd)/.conda-env"
+```
+
+If activation fails:
 ```bash
 conda info --envs
 ```
-
 Then activate the full path shown for `.conda-env`.
 
-### 3. Run connection test
-
+Run local test:
 ```bash
-python mysql_test.py --host 127.0.0.1 --user root --database mysql
+python sqlite_test.py
 ```
 
-The script will prompt for a password securely.
-
-### 4. Optional: update environment if file changes
-
+Use a custom database file if needed:
 ```bash
-conda env update -p ./.conda-env -f environment.yml --prune
+python sqlite_test.py --db my_section.db
 ```
-
-## Backup path (no conda)
-
-### 1. Create virtual environment
-
-```bash
-python -m venv .venv
-```
-
-### 2. Activate it
-
-```bash
-source .venv/bin/activate
-```
-
-### 3. Install dependency
-
-```bash
-pip install -r requirements.txt
-```
-
-(Equivalent single-package install: `pip install mysql-connector-python==9.2.0`)
-
-### 4. Run script
-
-```bash
-python mysql_test.py --host 127.0.0.1 --user root --database mysql
-```
-
-## Escape hatch: JupyterHub notebook
-
-If local setup still fails, use:
-- `mysql_test_notebook.ipynb`
-
-Notebook flow:
-1. Open the notebook in campus JupyterHub.
-2. Edit `HOST`, `PORT`, `USER`, `DATABASE`.
-3. Run cells top to bottom and enter password when prompted.
-4. If import fails, run `%pip install mysql-connector-python==9.2.0` in a cell, then restart kernel.
