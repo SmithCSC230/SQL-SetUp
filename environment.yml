@@ -1,0 +1,8 @@
+name: csc230-mysql
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - mysql-connector-python==9.2.0
